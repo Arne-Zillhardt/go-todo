@@ -6,47 +6,99 @@ import (
 	"os"
 )
 
-func ReadFile() (readContent [][]string) {
-	file, err := os.Open("../../../../assets/todo.csv")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
+var readFile [][]string
+var filePath string = "../../../../assets/todo.csv"
 
-	reader := csv.NewReader(file)
-	for {
-		line, err := reader.Read()
-
-		if err != nil {
-			if err.Error() == "EOF" {
-				break
-			}
-			log.Fatal(err)
-		}
-
-		readContent = append(readContent, line)
+func GetReadFile() [][]string {
+	if readFile == nil {
+		readFile = readTheTodoFile()
 	}
 
-	return
+	return readFile
 }
 
-func WriteNewTaskToFile(contentToWrite []string) {
-	file, err := os.OpenFile("../../../../assets/todo.csv", os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+func WriteNewTaskToTheTodoFile(contentToWrite []string) {
+	file := openFileToAppend()
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write([]string{})
+	updateReadFile(contentToWrite)
+	writeToFile(*writer, contentToWrite)
+}
+
+func UpdateTaskInTheTodoFile(updatedContent []string) {
+	file := openFileToRewrite()
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	updateReadFile(updatedContent)
+	for _, line := range readFile {
+		writeToFile(*writer, line)
+	}
+}
+
+func updateReadFile(updatedContent []string) {
+	for i, line := range readFile {
+		if line[0] != updatedContent[0] {
+			continue
+		}
+
+		readFile[i][1] = updatedContent[1]
+		readFile[i][2] = updatedContent[2]
+		readFile[i][3] = updatedContent[3]
+		return
+	}
+
+	readFile = append(readFile, updatedContent)
+}
+
+func readTheTodoFile() (readContent [][]string) {
+	file := openFileToRead()
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	readContent, err := reader.ReadAll()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = writer.Write(contentToWrite)
+	return
+}
+
+func writeToFile(writer csv.Writer, lineToWrite []string) {
+	err := writer.Write(lineToWrite)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func openFileToRead() *os.File {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return file
+}
+
+func openFileToAppend() *os.File {
+	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return file
+}
+
+func openFileToRewrite() *os.File {
+	file, err := os.OpenFile(filePath, os.O_TRUNC|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return file
 }
