@@ -15,6 +15,18 @@ func AssertEquals(expected any, actual any, t *testing.T) {
 	}
 }
 
+func AssertTrue(result bool, t *testing.T) {
+	if !result {
+		t.Errorf("\nExpected: %t\nActual: %t", false, result)
+	}
+}
+
+func AssertFalse(result bool, t *testing.T) {
+	if result {
+		t.Errorf("\nExpected: %t\nActual: %t", false, result)
+	}
+}
+
 func SaveFile(filePath string) {
 	file, err := os.Open(filePath)
 	if err != nil {
