@@ -31,3 +31,8 @@ func TestMapMultipleToToDo(t *testing.T) {
 	test.AssertEquals("Just another test", result[1].Task, t)
 	test.AssertTrue(result[1].Done, t)
 }
+
+func TestMapToCSV(t *testing.T) {
+	//https://www.geeksforgeeks.org/class-and-object-in-golang/
+	input := mapper.Todo
+}

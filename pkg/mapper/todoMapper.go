@@ -39,3 +39,7 @@ func MapMultipleToToDo(csvTodos [][]string) (todos []Todo) {
 
 	return
 }
+
+func MapToCSV(todo Todo) (csvTodo []string) {
+	return
+}
