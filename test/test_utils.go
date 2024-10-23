@@ -27,12 +27,12 @@ func SaveFile(filePath string) {
 }
 
 func WriteSavedFile(filePath string) {
-	// file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_TRUNC, 0644)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// defer file.Close()
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_TRUNC, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
-	// writer := csv.NewWriter(file)
-	// writer.WriteAll(readFile)
+	writer := csv.NewWriter(file)
+	writer.WriteAll(readFile)
 }
