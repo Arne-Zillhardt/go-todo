@@ -34,5 +34,12 @@ func TestMapMultipleToToDo(t *testing.T) {
 
 func TestMapToCSV(t *testing.T) {
 	//https://www.geeksforgeeks.org/class-and-object-in-golang/
-	input := mapper.Todo
+	input := mapper.Todo{Id: 1, Name: "Test", Task: "Test conversion", Done: true}
+	expected := []string{"1", "Test", "Test conversion", "true"}
+
+	actual := mapper.MapToCSV(input)
+
+	for i, value := range expected {
+		test.AssertEquals(value, actual[i], t)
+	}
 }

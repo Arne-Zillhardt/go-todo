@@ -41,5 +41,10 @@ func MapMultipleToToDo(csvTodos [][]string) (todos []Todo) {
 }
 
 func MapToCSV(todo Todo) (csvTodo []string) {
+	csvTodo = append(csvTodo, strconv.Itoa(todo.Id))
+	csvTodo = append(csvTodo, todo.Name)
+	csvTodo = append(csvTodo, todo.Task)
+	csvTodo = append(csvTodo, strconv.FormatBool(todo.Done))
+
 	return
 }
