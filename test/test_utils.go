@@ -27,6 +27,12 @@ func AssertFalse(result bool, t *testing.T) {
 	}
 }
 
+func AssertNull(result any, t *testing.T) {
+	if result != nil {
+		t.Errorf("\nExpected: nil\nActual: %t", result)
+	}
+}
+
 func SaveFile(filePath string) {
 	file, err := os.Open(filePath)
 	if err != nil {
