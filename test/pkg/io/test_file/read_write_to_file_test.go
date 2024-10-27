@@ -63,3 +63,16 @@ func TestUpdateTaskInTheTodoFile(t *testing.T) {
 	test.AssertEquals("Test the updating of documents", result[index][2], t)
 	test.AssertEquals("false", result[index][3], t)
 }
+
+func TestRemoveTaskInTheTodoFile(t *testing.T) {
+	input := []string{"4", "Test", "Test, the writing of documents", "false"}
+	file.WriteNewTaskToTheTodoFile(input)
+
+	file.RemoveTaskInTheTodoFile(4)
+	result := file.GetReadFile()
+	index := len(result) - 1
+	test.AssertEquals("3", result[index][0], t)
+	test.AssertEquals("Test", result[index][1], t)
+	test.AssertEquals("Test the updating of documents", result[index][2], t)
+	test.AssertEquals("false", result[index][3], t)
+}

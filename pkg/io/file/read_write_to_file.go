@@ -41,6 +41,27 @@ func UpdateTaskInTheTodoFile(updatedContent []string) {
 	}
 }
 
+func RemoveTaskInTheTodoFile(id int) {
+	newFile := make([][]string, len(readFile))
+	for i, line := range readFile {
+		if i == id {
+			continue
+		}
+
+		newFile = append(newFile, line)
+	}
+
+	readFile = newFile
+
+	file := openFileToRewrite()
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	for _, line := range readFile {
+		writeToFile(*writer, line)
+	}
+}
+
 func updateReadFile(updatedContent []string) {
 	for i, line := range readFile {
 		if line[0] != updatedContent[0] {
