@@ -7,7 +7,7 @@ import (
 )
 
 var readFile [][]string
-var filePath string = "../../../../assets/todo.csv"
+var filePath string = "./assets/todo.csv"
 
 func GetReadFile() [][]string {
 	if readFile == nil {
@@ -42,7 +42,7 @@ func UpdateTaskInTheTodoFile(updatedContent []string) {
 }
 
 func RemoveTaskInTheTodoFile(id int) {
-	newFile := make([][]string, len(readFile))
+	var newFile [][]string
 	for i, line := range readFile {
 		if i == id {
 			continue

@@ -19,6 +19,7 @@ func populateCommands() {
 		Add{},
 		Remove{},
 		Update{},
+		Show{},
 	}
 }
 

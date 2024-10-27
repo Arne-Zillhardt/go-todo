@@ -12,5 +12,6 @@ func TestGetCommand(t *testing.T) {
 	test.AssertEquals("add", command.GetCommand("ADd").GetActivation(), t)
 	test.AssertEquals("remove", command.GetCommand("RemOVe").GetActivation(), t)
 	test.AssertEquals("update", command.GetCommand("UPDaTe").GetActivation(), t)
+	test.AssertEquals("show", command.GetCommand("ShOW").GetActivation(), t)
 	test.AssertNull(command.GetCommand(""), t)
 }

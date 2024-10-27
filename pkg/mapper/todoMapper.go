@@ -17,7 +17,6 @@ func MapToToDo(csvTodo []string) (todo Todo) {
 	todo.Id, err = strconv.Atoi(csvTodo[0])
 	if err != nil {
 		log.Fatal(err)
-
 	}
 
 	todo.Name = csvTodo[1]

@@ -24,6 +24,6 @@ func (a Add) Execute() {
 
 func getNewId() int {
 	todos := file.GetReadFile()
-	lastTodo := mapper.MapToToDo(todos[0])
+	lastTodo := mapper.MapToToDo(todos[len(todos)-1])
 	return lastTodo.Id + 1
 }

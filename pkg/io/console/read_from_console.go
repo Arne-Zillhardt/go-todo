@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func GetUserInput(question string) (input string) {
@@ -14,6 +15,7 @@ func GetUserInput(question string) (input string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	input = strings.Split(input, "\n")[0]
 
 	return
 }
