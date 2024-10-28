@@ -2,7 +2,6 @@ package command
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 
 	"github.com/arne-zillhardt/todo/pkg/io/console"
@@ -32,7 +31,11 @@ func (u Update) Execute() {
 
 	updateName(name, &todo)
 	updateTask(task, &todo)
-	updateDone(done, &todo)
+	err := updateDone(done, &todo)
+	if err != nil {
+		fmt.Println("Wrong input. Boolean expected")
+		return
+	}
 
 	file.UpdateTaskInTheTodoFile(mapper.MapToCSV(todo))
 }
@@ -53,17 +56,18 @@ func updateTask(task string, todo *mapper.Todo) {
 	todo.Task = task
 }
 
-func updateDone(done string, todo *mapper.Todo) {
+func updateDone(done string, todo *mapper.Todo) error {
 	if keepOriginal(done) {
-		return
+		return nil
 	}
 
 	newDone, err := strconv.ParseBool(done)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	todo.Done = newDone
+	return nil
 }
 
 func keepOriginal(input string) bool {

@@ -15,7 +15,12 @@ func (r Remove) GetActivation() string {
 }
 
 func (r Remove) Execute() {
-	idToRemove, _ := strconv.Atoi(console.GetUserInput("Id to remove: "))
+	idToRemove, err := strconv.Atoi(console.GetUserInput("Id to remove: "))
+	if err != nil {
+		fmt.Println("Wrong input. Number expected")
+		return
+	}
+
 	id := findRowWithId(idToRemove)
 	if id == -1 {
 		fmt.Println("!No todo with this id found!")

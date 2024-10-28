@@ -42,6 +42,10 @@ func showAll() {
 	for _, todo := range parsedTodos {
 		printTodo(todo)
 	}
+
+	if len(parsedTodos) == 0 {
+		fmt.Println("No todos found")
+	}
 }
 
 func showId(id int) {

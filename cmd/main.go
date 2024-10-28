@@ -17,6 +17,10 @@ func main() {
 		}
 
 		command := command.GetCommand(userInput)
+		if command == nil {
+			fmt.Println("No command '", userInput, "' found")
+			continue
+		}
 		command.Execute()
 	}
 }
