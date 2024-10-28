@@ -3,13 +3,16 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/arne-zillhardt/todo/pkg/command"
 	"github.com/arne-zillhardt/todo/pkg/io/console"
 )
 
 func main() {
+	clearConsole()
 	for {
+
 		userInput := console.GetUserInput("> ")
 		if userInput == "q" {
 			fmt.Println("See you later :)")
@@ -21,6 +24,13 @@ func main() {
 			fmt.Println("No command '", userInput, "' found")
 			continue
 		}
+		clearConsole()
 		command.Execute()
 	}
+}
+
+func clearConsole() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
